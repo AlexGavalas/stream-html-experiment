@@ -1,0 +1,24 @@
+{
+    "name": "stream-html",
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "nodemon src/server.js",
+        "start": "node src/server.js"
+    },
+    "dependencies": {
+        "@hono/node-server": "1.8.1",
+        "hono": "4.0.6",
+        "rehype-sanitize": "6.0.0",
+        "rehype-stringify": "10.0.0",
+        "remark-parse": "11.0.0",
+        "remark-rehype": "11.1.0",
+        "swtl": "0.2.1",
+        "unified": "11.0.4"
+    },
+    "devDependencies": {
+        "@types/node": "20.11.22",
+        "nodemon": "3.1.0",
+        "prettier": "3.2.5"
+    }
+}
