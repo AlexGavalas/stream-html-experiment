@@ -1,16 +1,17 @@
 {
-  "name": "stream-html",
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "node --watch src/server.js",
-    "start": "node src/server.js"
-  },
-  "dependencies": {
-    "@hono/node-server": "2.0.4",
-    "hono": "4.12.23"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "2.4.16"
-  }
+    "name": "stream-html",
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "node --watch src/server.js",
+        "start": "node src/server.js",
+        "format": "biome check --write"
+    },
+    "dependencies": {
+        "@hono/node-server": "2.0.4",
+        "hono": "4.12.23"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "2.4.16"
+    }
 }
