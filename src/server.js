@@ -1,7 +1,12 @@
 import { serve } from '@hono/node-server';
+import streamExample from './stream-example.js';
 
-import app from './app.js';
-
-serve(app).listen(3000, () => {
+serve(
+  {
+    fetch: streamExample.fetch,
+    port: 3000,
+  },
+  () => {
     console.log('Server started at http://localhost:3000');
-});
+  },
+);

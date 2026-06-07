@@ -1,43 +1,39 @@
-import { render } from 'swtl';
-
-const encoder = new TextEncoder();
-
 export function createReadableStreamFromAsyncGenerator(output) {
-    return new ReadableStream({
-        async start(controller) {
-            while (true) {
-                const { done, value } = await output.next();
+  const encoder = new TextEncoder();
 
-                if (done) {
-                    controller.close();
-                    break;
-                }
+  return new ReadableStream({
+    async start(controller) {
+      while (true) {
+        const { done, value } = await output.next();
 
-                controller.enqueue(encoder.encode(value));
-            }
-        },
-    });
+        controller.enqueue(encoder.encode(value));
+
+        if (done) {
+          controller.close();
+          break;
+        }
+      }
+    },
+  });
 }
 
 export async function* renderInResolvedOrder(promises) {
-    let promisesWithIndexes = promises.map((promise, index) => {
-        return {
-            index,
-            promise: promise.then((value) => {
-                return { index, value };
-            }),
-        };
-    });
+  let promisesWithIndexes = promises.map((promise, index) => ({
+    index,
+    promise: promise.then((value) => ({ index, value })),
+  }));
 
-    while (promisesWithIndexes.length > 0) {
-        const result = await Promise.race(
-            promisesWithIndexes.map((p) => p.promise),
-        );
+  while (promisesWithIndexes.length > 0) {
+    const result = await Promise.race(
+      promisesWithIndexes.map((p) => p.promise),
+    );
 
-        yield* render(result.value);
+    yield* result.value;
 
-        promisesWithIndexes = promisesWithIndexes.filter((promise) => {
-            return promise.index !== result.index;
-        });
-    }
+    promisesWithIndexes = promisesWithIndexes.filter(
+      (promise) => promise.index !== result.index,
+    );
+  }
 }
+
+export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
